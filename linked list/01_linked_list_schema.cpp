@@ -22,9 +22,7 @@ public:
         // Next pointer is pointed to NULL
         next = NULL;
     }
-    void f(){
-        cout<<"Working"<<endl;
-    }
+    
 };
 
 class LinkList{
@@ -150,6 +148,32 @@ class LinkList{
         while(fastPtr and fastPtr->next){
             slowPtr = slowPtr->next;
             fastPtr=  fastPtr->next->next;
+        }
+        return slowPtr;
+    }
+
+    // cycle in link list
+    // if return NULL : no cycle
+    // else cycle is present at node returned
+    node*cycleinlist(){
+        node*slowPtr = head;
+        node*fastPtr = head;
+        while(fastPtr and fastPtr->next){
+            slowPtr = slowPtr->next;
+            fastPtr = fastPtr->next->next;
+            if(slowPtr==fastPtr)
+                break;
+        }
+
+        // no cycle
+        if(!fastPtr or !fastPtr->next)
+            return NULL;
+        
+        // cycle present
+        slowPtr = head;
+        while(slowPtr!=fastPtr){
+            slowPtr = slowPtr->next;
+            fastPtr = fastPtr->next;
         }
         return slowPtr;
     }

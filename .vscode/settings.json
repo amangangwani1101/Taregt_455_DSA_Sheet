@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.exe": "cpp",
+    "array": "cpp",
+    "string": "cpp"
+  }
+}
