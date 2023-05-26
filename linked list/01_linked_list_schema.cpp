@@ -178,6 +178,16 @@ class LinkList{
         return slowPtr;
     }
 
+    // function to find length of link list
+    int getLengthList(node*head){
+        int length=0;
+        while(head){
+            head = head->next;
+            length++;
+        }
+        return length;
+    }
+
     // Function to print the
     // singly linked list
     void print(node*head)
@@ -191,6 +201,25 @@ class LinkList{
         cout << "NULL" << endl;
     }
 
+    node*merge2list(node*head1,node*head2){
+        node*newHead = NULL;
+        node*temp = NULL;
+        while(head1 and head2){
+            if(head1->data<=head2->data){
+                if(!temp) temp = head1,newHead = head1;
+                else temp->next = head1,temp = temp->next;
+                head1 = head1->next;
+            }
+            else{
+                if(!temp) temp = head2,newHead = head2;
+                else temp->next = head2,temp = temp->next;
+                head2 = head2->next;
+            }
+        }   
+        if(head1) temp->next = head1;
+        if(head2) temp->next = head2;
+        return newHead;
+    }
 };
   
 // Main function
