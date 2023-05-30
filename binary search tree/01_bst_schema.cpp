@@ -11,7 +11,7 @@ public:
     }
 };
 
-class Tree{
+class BST{
 public:
 
     // maximum height of a tree
@@ -105,6 +105,40 @@ public:
         }
     }
 
+    // valid binary search tree
+    bool validBST(Node*root,int &prev){
+        if(!root) return true;
+        bool left = validBST(root->left,prev);
+        if(prev>=root->val) return false;
+        prev = root->val;
+        bool right = validBST(root->right,prev);
+        return left and right;
+    }
+
+    Node*findPrev(Node*root){
+        if(!root) return NULL;
+        while(root->right)
+            root = root->right;
+        return root;
+    }
+
+    // delete node in BST
+    Node* deleteNode(Node*root,int val){
+        if(!root or (!root->left and !root->right and root->val==val)) 
+            return NULL;
+        if(root->val==val){
+            Node* prevNode = findPrev(root->left);
+            if(!prevNode) return root->right;
+            swap(prevNode->val,root->val);
+            root->left = deleteNode(root->left,prevNode->val);
+        }
+        if(root->val>val)
+            root->left = deleteNode(root->left,val);
+        else        
+            root->right = deleteNode(root->right,val);
+        return root;
+    }
+    
     // print tree
     void printVectorTree(vector<int>&ans){  
         for(int val:ans)
@@ -114,13 +148,16 @@ public:
 
 };
 int main(){
-    Tree * obj = new Tree();
+    BST * obj = new BST();
     vector<int>ans;
 
-    Node *node = new Node(1);
+    int prev = 0;
+    Node *node = new Node(4);
     node->left = new Node(2);
-    node->right = new Node(3);
-    node->left->left = new Node(4);
-    node->left->right = new Node(5);
+    node->right = new Node(5);
+    node->left->left = new Node(1);
+    node->left->right = new Node(3);
+
+    cout<<(obj->validBST(node,prev))<<endl;    
     return 0;
 }
