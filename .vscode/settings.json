@@ -2,6 +2,9 @@
   "files.associations": {
     "*.exe": "cpp",
     "array": "cpp",
-    "string": "cpp"
-  }
+    "string": "cpp",
+    "cstdlib": "cpp",
+    "new": "cpp"
+  },
+  "C_Cpp.errorSquiggles": "disabled"
 }
