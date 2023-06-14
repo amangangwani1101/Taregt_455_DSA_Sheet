@@ -68,6 +68,28 @@ public:
     }
 };  
 
+// Combination Sum - III
+class Solution3{
+private:
+    vector<vector<int>>ans;
+public:
+    void combinationSum3(int target,int k,int curr,vector<int>&temp){
+        if(!target) {
+            ans.push_back(temp);
+            return;
+        }
+        if(!k or !target or curr>9) return; 
+        temp.push_back(curr);
+        combinationSum3(target-curr,k-1,curr+1,temp);
+        temp.pop_back();
+        combinationSum3(target,k,curr+1,temp);
+    }
+
+    vector<vector<int>> getans(){
+        return ans;
+    }
+};
+
 int main(){
     Solution2 * s = new Solution2(candidates);
     vector<int>temp;
