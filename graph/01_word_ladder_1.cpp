@@ -6,7 +6,9 @@ private:
     vector<int>alphabets;
     unordered_map<string,bool>saveWords;
     string start,target;
-    queue<string>q;
+    unordered_set<string>word;
+    queue<vector<string>>q;
+    vector<vector<string>>ans;
 public:
     Question(vector<string>&wordList,string startWord,string endWord){
         alphabets.resize(26,0);
@@ -17,33 +19,43 @@ public:
         target = endWord;
     }
     
-    int shortestPath(){
-        int time = 1;
-        q.push(start);
+    vector<vector<string>> shortestPath(){
+        q.push({start});
+        saveWords[start] = false;
         while(!q.empty()){
             int sz = q.size();
             while(sz--){
-                string temp = q.front();
+                auto temp = q.front();
+                string last = temp.back();
+                // cout<<last<<" ";
                 q.pop();
-                if(temp==target) return time;
-                for(int s=0;s<temp.size();s++){
-                    char ch = temp[s];
+                for(int s=0;s<last.size();s++){
+                    char ch = last[s];
                     for(char al='a';al<='z';al++){
                         if(ch==al) continue;
-                        temp[s] = al;
-                        if(saveWords[temp]){
+                        last[s] = al;
+                        if(saveWords[last]){
+                            temp.push_back(last);
                             q.push(temp);
-                            saveWords[temp] = false;
+                            if(last==target){
+                                ans.push_back(temp);
+                            }
+                            temp.pop_back();
+                            word.insert(last);
                         }
                     }
-                    temp[s] = ch;
+                    last[s] = ch;
                 }
             }
-            time++;
+            for(string t:word)
+                saveWords[t] = false;
+            word.clear();
+            if(ans.size()) break;
         }
-        return 0;
+        return ans;
     }
 };
+    
 
 int main(){
     
