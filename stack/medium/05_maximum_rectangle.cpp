@@ -10,14 +10,15 @@ class LRH{
 public:
     void largestRectangle(vector<int>&arr){
         arr.push_back(0);
-        int n = arr.size();
+        int n = arr.size(),ans=0;
         stack<int>st;
         for(int i=0;i<n;i++){
-            while(!st.empty() and arr[st.top()]>=arr[i])
+            while(!st.empty() and arr[st.top()]>=arr[i]){
                 st.pop();
-            int left = st.size()?st.top():0;
-            int right = i;
-            ans = max(ans,(right-left+1)*arr[i]);
+                int left = st.size()?st.top()+1:0;
+                int right = i;
+                ans = max(ans,(right-left)*arr[i]);
+            }
             st.push(i);
         }
     }    
