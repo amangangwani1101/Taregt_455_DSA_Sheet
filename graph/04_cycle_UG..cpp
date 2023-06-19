@@ -63,6 +63,29 @@ public:
 };
 
 
+class Solution {
+  public:
+    // Function to detect cycle in an undirected graph.
+    bool isCycle(int V, vector<int> adj[]) {
+        // Code here
+        DSU ds(V);
+        bool ans = false;
+        map<pair<int,int>,bool>mp;
+        for(int i=0;i<V;i++){
+            for(auto it:adj[i]){
+                if(!mp[{i,it}]){
+                    mp[{i,it}] = 1;
+                    mp[{it,i}] = 1;
+                    ans |=ds.Union(i,it);
+                    if(ans)return true;
+                }
+            }
+        }
+        return false;
+    }
+};
+
+
 int main(){
 
     return 0;
